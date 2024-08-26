@@ -1,7 +1,16 @@
 #include <Python.h>
 
-static PyModuleDef module_def = {PyModuleDef_HEAD_INIT, "cudart", NULL, -1, NULL};
+static int module_exec(PyObject * self) {
+    return 0;
+}
 
-extern PyObject * PyInit_cudart() {
-    return PyModule_Create(&module_def);
+static PyModuleDef_Slot module_slots[] = {
+    {Py_mod_exec, module_exec},
+    {0},
+};
+
+static PyModuleDef module_def = {PyModuleDef_HEAD_INIT, "cudart", NULL, 0, NULL, module_slots, NULL, NULL, NULL};
+
+PyObject * PyInit_cudart() {
+    return PyModuleDef_Init(&module_def);
 }
